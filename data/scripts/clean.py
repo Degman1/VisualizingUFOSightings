@@ -41,7 +41,7 @@ pop_df = pop_df[pop_df[col].apply(is_us_state)]
 poverty_df = poverty_df[poverty_df[col].apply(is_us_state)]
 unemp_df = unemp_df[unemp_df[col].apply(is_us_state)]
 
-ufo_df['id'] = range(len(ufo_df))
+ufo_df['sighting_id'] = range(len(ufo_df))
 
 output = "../cleaned/"
 ufo_df.to_csv(f"{output}cleand_ufo.csv", index=False)
