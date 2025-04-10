@@ -10,8 +10,7 @@ import SightingsMap from './Components/SightingsMap';
 const TwoColumnLayout = () => {
   const [selectedState, setSelectedState] = useState(null);
   const [selectedSightingID, setSelectedSightingID] = useState(0);
-  const [selectedVariable, setSelectedVariable] = useState('population');
-  const [tab, setTab] = useState("trends"); // "trends" or "individual"
+  const [tab, setTab] = useState("aggregate"); // "aggregate" or "individual" or "info"
 
   const handleStateClick = useCallback((stateName) => {
     setSelectedState(stateName);
@@ -26,22 +25,16 @@ const TwoColumnLayout = () => {
     <div style={styles.wrapper}>
       <div style={styles.leftColumn}>
         <Header setTab={setTab} />
-        {tab === "trends" && (
-          <TrendsMap onStateClick={handleStateClick} selectedVariable={selectedVariable} />
+        {tab === "aggregate" && (
+          <TrendsMap onStateClick={handleStateClick} />
         )}
         {tab === "individual" && (
           <SightingsMap onSightingClick={onSightingClick} />
         )}
-        <input
-          type="text"
-          value={selectedVariable}
-          onChange={(e) => setSelectedVariable(e.target.value)}
-          placeholder="Enter variable name..."
-        />
       </div>
       <div style={styles.rightColumn}>
-        {tab === "trends" && <Graphic1 selectedState={selectedState} />}
-        {tab === "trends" && <Graphic2 selectedState={selectedState} />}
+        {tab === "aggregate" && <Graphic1 selectedState={selectedState} />}
+        {tab === "aggregate" && <Graphic2 selectedState={selectedState} />}
         {tab === "individual" && <Graphic3 selectedSightingID={selectedSightingID} />}
         {tab === "individual" && <Graphic4 selectedSightingID={selectedSightingID} />}
       </div>
@@ -55,6 +48,7 @@ const styles = {
     height: '100vh',
     width: '100vw',
     overflow: 'hidden',
+    backgroundColor: '#303030',
   },
   leftColumn: {
     flex: 13,

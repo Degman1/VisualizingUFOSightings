@@ -11,7 +11,7 @@ const TrendsMap = ({ onStateClick, selectedVariable }) => {
   useEffect(() => {
     const width = 975;
     const height = 610;
-    
+
     // Variable to keep track of the currently zoomed/selected state.
     let currentSelected = null;
 
@@ -58,7 +58,7 @@ const TrendsMap = ({ onStateClick, selectedVariable }) => {
           if (onStateClick) onStateClick(null);
           return;
         }
-        
+
         // Otherwise, zoom in on the clicked state.
         const [[x0, y0], [x1, y1]] = path.bounds(d);
         event.stopPropagation();
@@ -105,14 +105,14 @@ const TrendsMap = ({ onStateClick, selectedVariable }) => {
   // and update state fill colors by sightings per capita.
   useEffect(() => {
     if (!statesRef.current) return;
-    
+
     // Load UFO sightings CSV and population CSV concurrently.
     Promise.all([
       d3.csv('/cleaned/cleaned_ufo.csv', d => ({
         state_full: d.state_full, // full state name (as used on the map)
       })),
       d3.csv('/cleaned/cleaned_population.csv', d => ({
-        Area_Name: d.Area_Name, 
+        Area_Name: d.Area_Name,
         CENSUS_2020_POP: +d.CENSUS_2020_POP, // convert population to a number
       }))
     ]).then(([ufoData, popData]) => {
@@ -167,6 +167,15 @@ const TrendsMap = ({ onStateClick, selectedVariable }) => {
   return (
     <div style={styles.box}>
       <svg ref={svgRef} />
+      <div style={styles.legend}>
+        <div style={styles.legendTitle}>Sightings per Capita</div>
+        <div style={styles.legendGradient} />
+        <div style={styles.legendLabels}>
+          <span>Low</span>
+          <span>High</span>
+        </div>
+      </div>
+
     </div>
   );
 };
@@ -177,7 +186,38 @@ const styles = {
     height: '100%',
     overflow: 'hidden',
     borderRadius: '4px',
+    position: "relative"
   },
+  legend: {
+    position: 'absolute',
+    bottom: '10px',
+    right: '10px', 
+    padding: '8px 12px',
+    background: 'white',
+    border: '1px solid #ccc',
+    borderRadius: '6px',
+    boxShadow: '0 1px 4px rgba(0,0,0,0.2)',
+    fontSize: '12px',
+    zIndex: 10,
+  },  
+  legendTitle: {
+    marginBottom: '4px',
+    fontWeight: 'bold',
+    fontSize: '13px',
+  }, 
+  legendGradient: {
+    width: '150px',
+    height: '12px',
+    background: 'linear-gradient(to right, #f7fbff, #08306b)',
+    borderRadius: '2px',
+  },
+  legendLabels: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginTop: '4px',
+    fontSize: '11px',
+  },
+
 };
 
 export default React.memo(TrendsMap);
