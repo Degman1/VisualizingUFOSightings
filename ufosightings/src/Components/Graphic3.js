@@ -7,6 +7,11 @@ const capitalize = str =>
     .map(x => x?.charAt(0).toUpperCase() + x?.slice(1).toLowerCase())
     .join(" ");
 
+const decodeHTML = (str) => {
+    const txt = document.createElement('textarea');
+    txt.innerHTML = str;
+    return txt.value;
+  };
 
 const Graphic3 = ({ selectedSightingID }) => {
   const [sightingData, setSightingData] = useState(null);
@@ -20,7 +25,7 @@ const Graphic3 = ({ selectedSightingID }) => {
     d3.csv('/cleaned/cleaned_ufo.csv', d => ({
       sighting_id: d.sighting_id,
       datetime: d.datetime,
-      city: capitalize(d.city),
+      city: capitalize(decodeHTML(d.city)),
       state: d.state.toUpperCase(),
       country: d.country,
       shape: d.shape,

@@ -40,6 +40,9 @@ const SightingsMap = ({ onSightingClick }) => {
 
     const pointsGroup = g.append('g').attr('class', 'sightings');
 
+    // Randomize mod group
+    const randomMod = Math.floor(Math.random() * 5);
+
     d3.csv('/cleaned/cleaned_ufo.csv', d => ({
       datetime: d.datetime,
       city: d.city,
@@ -60,7 +63,7 @@ const SightingsMap = ({ onSightingClick }) => {
         !isNaN(d.longitude) &&
         d.durationSeconds > 0 &&
         !isNaN(+d.sighting_id) &&
-        +d.sighting_id % 5 === 1
+        +d.sighting_id % 5 === randomMod
       );
 
       console.log("Valid points loaded:", validData.length);
@@ -134,7 +137,7 @@ const SightingsMap = ({ onSightingClick }) => {
     <div style={styles.box}>
       <svg ref={svgRef} />
       <div style={styles.legend}>
-        <span style={styles.legendText}>*Only 50% of data rendered</span>
+        <span style={styles.legendText}>*Only 20% of data rendered</span>
       </div>
     </div>
   );

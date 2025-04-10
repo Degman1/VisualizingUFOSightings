@@ -30,7 +30,7 @@ const Graphic1 = ({ selectedState }) => {
             const year = +date.split('/')[2];
             return { year };
           })
-          .filter(d => !isNaN(d.year) && d.year >= 1940 && d.year <= 2023),
+          .filter(d => !isNaN(d.year) && d.year >= 1940 && d.year <= 2013),
         v => v.length,
         d => d.year
       );
