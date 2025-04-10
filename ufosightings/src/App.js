@@ -1,22 +1,37 @@
 import React, { useState, useCallback } from 'react';
-import Map from './Components/Map';
+import TrendsMap from './Components/TrendsMap';
 import Graphic1 from './Components/Graphic1';
 import Graphic2 from './Components/Graphic2';
+import Graphic3 from './Components/Graphic3';
+import Graphic4 from './Components/Graphic4';
 import Header from './Components/Header';
+import SightingsMap from './Components/SightingsMap';
 
 const TwoColumnLayout = () => {
   const [selectedState, setSelectedState] = useState(null);
+  const [selectedSightingID, setSelectedSightingID] = useState(0);
   const [selectedVariable, setSelectedVariable] = useState('population');
+  const [tab, setTab] = useState("trends"); // "trends" or "individual"
 
   const handleStateClick = useCallback((stateName) => {
     setSelectedState(stateName);
   }, []);
 
+  // Memoize the sighting click callback, so its reference stays stable.
+  const onSightingClick = useCallback((id) => {
+    setSelectedSightingID(id);
+  }, []);
+
   return (
     <div style={styles.wrapper}>
       <div style={styles.leftColumn}>
-        <Header />
-        <Map onStateClick={handleStateClick} selectedVariable={selectedVariable} />
+        <Header setTab={setTab} />
+        {tab === "trends" && (
+          <TrendsMap onStateClick={handleStateClick} selectedVariable={selectedVariable} />
+        )}
+        {tab === "individual" && (
+          <SightingsMap onSightingClick={onSightingClick} />
+        )}
         <input
           type="text"
           value={selectedVariable}
@@ -25,8 +40,10 @@ const TwoColumnLayout = () => {
         />
       </div>
       <div style={styles.rightColumn}>
-        <Graphic1 selectedState={selectedState} />
-        <Graphic2 selectedState={selectedState} />
+        {tab === "trends" && <Graphic1 selectedState={selectedState} />}
+        {tab === "trends" && <Graphic2 selectedState={selectedState} />}
+        {tab === "individual" && <Graphic3 selectedSightingID={selectedSightingID} />}
+        {tab === "individual" && <Graphic4 selectedSightingID={selectedSightingID} />}
       </div>
     </div>
   );

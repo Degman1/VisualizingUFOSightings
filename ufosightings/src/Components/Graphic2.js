@@ -11,7 +11,7 @@ const Graphic2 = ({ selectedState }) => {
 
 const styles = {
   box: {
-    backgroundColor: '#d4fcd4',
+    backgroundColor: '#ffe5b4',
     borderRadius: '4px',
     textAlign: 'center',
     flex: 1,
