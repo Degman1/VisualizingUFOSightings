@@ -28,6 +28,19 @@ pop_df = load_and_pivot(f"{raw}PopulationEstimates.csv", "State", "Area_Name", "
 poverty_df = load_and_pivot(f"{raw}Poverty2023.csv", "Stabr", "Area_Name", "Attribute", "Value")
 unemp_df = load_and_pivot(f"{raw}Unemployment2023.csv", "State", "Area_Name", "Attribute", "Value")
 
+def is_us_state(s):
+    s_clean = s.strip().lower()
+    return any(
+        s_clean == state.name.lower() or s_clean == state.abbr.lower()
+        for state in us.states.STATES
+    )
+
+col = "Area_Name"
+edu_df = edu_df[edu_df[col].apply(is_us_state)]
+pop_df = pop_df[pop_df[col].apply(is_us_state)]
+poverty_df = poverty_df[poverty_df[col].apply(is_us_state)]
+unemp_df = unemp_df[unemp_df[col].apply(is_us_state)]
+
 output = "../cleaned/"
 ufo_df.to_csv(f"{output}cleand_ufo.csv", index=False)
 edu_df.to_csv(f"{output}cleaned_education.csv", index=False)
