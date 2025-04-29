@@ -4,12 +4,17 @@ import Graphic1 from './Components/Graphic1';
 import Graphic2 from './Components/Graphic2';
 import Graphic3 from './Components/Graphic3';
 import Graphic4 from './Components/Graphic4';
+import Graphic5 from './Components/Graphic5';
+import Graphic6 from './Components/Graphic6';
+
 import Header from './Components/Header';
 import SightingsMap from './Components/SightingsMap';
+import StateComparisons from './Components/StateComparisons';
 
 const TwoColumnLayout = () => {
   const [selectedState, setSelectedState] = useState(null);
   const [selectedSightingID, setSelectedSightingID] = useState(0);
+  const [statesList, setStatesList] = useState([])
   const [tab, setTab] = useState("aggregate"); // "aggregate" or "individual" or "info"
 
   const handleStateClick = useCallback((stateName) => {
@@ -21,6 +26,17 @@ const TwoColumnLayout = () => {
     setSelectedSightingID(id);
   }, []);
 
+  const onStateAdd = useCallback((newState) => {
+    setStatesList((prevStates) => {
+      if (prevStates.includes(newState)) {
+        return prevStates;
+      } else {
+        return [...prevStates, newState];
+      }
+    });
+  }, []);
+  
+
   return (
     <div style={styles.wrapper}>
       <div style={styles.leftColumn}>
@@ -31,12 +47,17 @@ const TwoColumnLayout = () => {
         {tab === "individual" && (
           <SightingsMap onSightingClick={onSightingClick} />
         )}
+        {tab === "comparison" && (
+          <StateComparisons onStateClick={onStateAdd} />
+        )}
       </div>
       <div style={styles.rightColumn}>
         {tab === "aggregate" && <Graphic1 selectedState={selectedState} />}
         {tab === "aggregate" && <Graphic2 selectedState={selectedState} />}
         {tab === "individual" && <Graphic3 selectedSightingID={selectedSightingID} />}
         {tab === "individual" && <Graphic4 selectedSightingID={selectedSightingID} />}
+        {tab === "comparison" && <Graphic5 statesList={statesList} />}
+        {tab === "comparison" && <Graphic6 statesList={statesList} />}
       </div>
     </div>
   );
