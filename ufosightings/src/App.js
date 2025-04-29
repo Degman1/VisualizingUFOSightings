@@ -31,7 +31,11 @@ const TwoColumnLayout = () => {
       if (prevStates.includes(newState)) {
         return prevStates;
       } else {
-        return [...prevStates, newState];
+        const updated = [...prevStates, newState];
+        if (updated.length > 5) {
+          updated.shift(); // remove the first (oldest) item
+        }
+        return updated;
       }
     });
   }, []);
@@ -48,7 +52,7 @@ const TwoColumnLayout = () => {
           <SightingsMap onSightingClick={onSightingClick} />
         )}
         {tab === "comparison" && (
-          <StateComparisons onStateClick={onStateAdd} />
+          <StateComparisons onStateClick={onStateAdd} statesList={statesList} />
         )}
       </div>
       <div style={styles.rightColumn}>
