@@ -10,7 +10,6 @@ const Header = ({ setTab }) => {
           <button style={styles.button} onClick={() => setTab("aggregate")}>Trends</button>
           <button style={styles.button} onClick={() => setTab("individual")}>Individual Sightings</button>
           <button style={styles.button} onClick={() => setTab("comparison")}>State Comparisons</button>
-          <button style={styles.button} onClick={() => setTab("info")}>Info</button>
         </div>
       </div>
     </div>
