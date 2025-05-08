@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 
 
 const Graphic5 = ({ statesList }) => {
-  
+  // NOT USED
 
   return (
     <div style={styles.box}>

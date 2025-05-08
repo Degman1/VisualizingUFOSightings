@@ -6,10 +6,11 @@ import Graphic3 from './Components/Graphic3';
 import Graphic4 from './Components/Graphic4';
 import Graphic5 from './Components/Graphic5';
 import Graphic6 from './Components/Graphic6';
+import TrendsMapMini from './Components/TrendsMapMini';
 
 import Header from './Components/Header';
 import SightingsMap from './Components/SightingsMap';
-import StateComparisons from './Components/StateComparisons';
+import StateComparisonsChart from './Components/StateComparisonsChart';
 
 const TwoColumnLayout = () => {
   const [selectedState, setSelectedState] = useState(null);
@@ -28,17 +29,21 @@ const TwoColumnLayout = () => {
 
   const onStateAdd = useCallback((newState) => {
     setStatesList((prevStates) => {
+      // Check if the state is already in the list
       if (prevStates.includes(newState)) {
-        return prevStates;
+        // Remove the state if it already exists
+        return prevStates.filter(state => state !== newState);
       } else {
+        // Add the state if not present, maintaining max length of 5
         const updated = [...prevStates, newState];
-        if (updated.length > 5) {
-          updated.shift(); // remove the first (oldest) item
+        if (updated.length > 500) {
+          updated.shift(); // Remove the first (oldest) item
         }
         return updated;
       }
     });
   }, []);
+  
   
 
   return (
@@ -52,7 +57,7 @@ const TwoColumnLayout = () => {
           <SightingsMap onSightingClick={onSightingClick} />
         )}
         {tab === "comparison" && (
-          <StateComparisons onStateClick={onStateAdd} statesList={statesList} />
+          <StateComparisonsChart statesList={statesList} />
         )}
       </div>
       <div style={styles.rightColumn}>
@@ -60,7 +65,7 @@ const TwoColumnLayout = () => {
         {tab === "aggregate" && <Graphic2 selectedState={selectedState} />}
         {tab === "individual" && <Graphic3 selectedSightingID={selectedSightingID} />}
         {tab === "individual" && <Graphic4 selectedSightingID={selectedSightingID} />}
-        {tab === "comparison" && <Graphic5 statesList={statesList} />}
+        {tab === "comparison" && <TrendsMapMini onStateClick={onStateAdd} statesList={statesList} setStatesList={setStatesList}/>}
         {tab === "comparison" && <Graphic6 statesList={statesList} />}
       </div>
     </div>

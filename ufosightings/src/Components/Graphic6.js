@@ -7,7 +7,7 @@ const Graphic6 = ({ statesList }) => {
 
   return (
     <div style={styles.box}>
-      {statesList}
+      {/* {statesList} */}
     </div>
   );
 };
@@ -18,7 +18,7 @@ const styles = {
     border: '5px solid #72ba72',
     borderRadius: '12px',
     padding: '24px',
-    flex: 1,
+    flex: 2,
     overflow: 'hidden',
     display: 'flex',
     alignItems: 'center',
