@@ -94,10 +94,10 @@ const TrendsMap = ({ onStateClick, selectedVariable }) => {
     if (!statesRef.current) return;
 
     Promise.all([
-      d3.csv('/cleaned/cleaned_ufo.csv', d => ({
+      d3.csv(`${process.env.PUBLIC_URL}/cleaned/cleaned_ufo.csv`, d => ({
         state_full: d.state_full,
       })),
-      d3.csv('/cleaned/cleaned_population.csv', d => ({
+      d3.csv(`${process.env.PUBLIC_URL}/cleaned/cleaned_population.csv`, d => ({
         Area_Name: d.Area_Name,
         CENSUS_2020_POP: +d.CENSUS_2020_POP,
       }))

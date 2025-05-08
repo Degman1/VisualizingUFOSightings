@@ -17,7 +17,7 @@ const Graphic1 = ({ selectedState }) => {
       .append('g')
       .attr('transform', `translate(${margin.left},${margin.top})`);
 
-    d3.csv('/cleaned/cleaned_ufo.csv', d => ({
+    d3.csv(`${process.env.PUBLIC_URL}/cleaned/cleaned_ufo.csv`, d => ({
       state_full: d.state_full,
       datetime: d.datetime
     })).then(data => {

@@ -24,7 +24,7 @@ const Graphic4 = ({ selectedSightingID }) => {
       return;
     }
 
-    d3.csv('/cleaned/cleaned_ufo.csv', d => ({
+    d3.csv(`${process.env.PUBLIC_URL}/cleaned/cleaned_ufo.csv`, d => ({
       sighting_id: d.sighting_id,
       comments: d.comments,
       city: d.city,

@@ -43,7 +43,7 @@ const SightingsMap = ({ onSightingClick }) => {
     // Randomize mod group
     const randomMod = Math.floor(Math.random() * 5);
 
-    d3.csv('/cleaned/cleaned_ufo.csv', d => ({
+    d3.csv(`${process.env.PUBLIC_URL}/cleaned/cleaned_ufo.csv`, d => ({
       datetime: d.datetime,
       city: d.city,
       state: d.state,

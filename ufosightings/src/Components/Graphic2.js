@@ -17,7 +17,7 @@ const Graphic2 = ({ selectedState }) => {
       .attr('width', width)
       .attr('height', height);
 
-    d3.csv('/cleaned/cleaned_ufo.csv', d => ({
+    d3.csv(`${process.env.PUBLIC_URL}/cleaned/cleaned_ufo.csv`, d => ({
       state_full: d.state_full,
       shape: d.shape
     }))
