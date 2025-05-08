@@ -20,10 +20,10 @@ const StateComparisonsChart = ({ statesList }) => {
 
   useEffect(() => {
     Promise.all([
-      d3.csv('/cleaned/cleaned_education.csv'),
-      d3.csv('/cleaned/cleaned_poverty.csv'),
-      d3.csv('/cleaned/cleaned_unemployed.csv'),
-      d3.csv('/cleaned/cleaned_population.csv')
+      d3.csv(`${process.env.PUBLIC_URL}/cleaned/cleaned_education.csv`),
+      d3.csv(`${process.env.PUBLIC_URL}/cleaned/cleaned_poverty.csv`),
+      d3.csv(`${process.env.PUBLIC_URL}/cleaned/cleaned_unemployed.csv`),
+      d3.csv(`${process.env.PUBLIC_URL}/cleaned/cleaned_population.csv`)
     ]).then(([eduData, povData, unemData, popData]) => {
       const eduCols  = Object.keys(eduData[0]).filter(c => c !== 'Area_Name');
       const povCols  = Object.keys(povData[0]).filter(c => c !== 'Area_Name');
@@ -39,11 +39,17 @@ const StateComparisonsChart = ({ statesList }) => {
     if (!statesList.length) return;
 
     Promise.all([
-      d3.csv('/cleaned/cleaned_ufo.csv',        d => ({ state_full: d.state_full.trim() })),
+      d3.csv(`${process.env.PUBLIC_URL}/cleaned/cleaned_ufo.csv`,        d => ({ state_full: d.state_full.trim() })),
+      d3.csv(`${process.env.PUBLIC_URL}/cleaned/cleaned_population.csv`),
+      d3.csv(`${process.env.PUBLIC_URL}/cleaned/cleaned_education.csv`),
+      d3.csv(`${process.env.PUBLIC_URL}/cleaned/cleaned_poverty.csv`),
+      d3.csv(`${process.env.PUBLIC_URL}/cleaned/cleaned_unemployed.csv`),
+      /*
       d3.csv('/cleaned/cleaned_population.csv'),
       d3.csv('/cleaned/cleaned_education.csv'),
       d3.csv('/cleaned/cleaned_poverty.csv'),
       d3.csv('/cleaned/cleaned_unemployed.csv')
+      */
     ]).then(([ufoData, popData, eduData, povData, unemData]) => {
       const agg = d3.rollup(ufoData, v => v.length, d => d.state_full);
       const aggregatedData = Object.fromEntries(agg);
