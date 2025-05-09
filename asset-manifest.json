@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/VisualizingUFOSightings/static/css/main.e6c13ad2.css",
-    "main.js": "/VisualizingUFOSightings/static/js/main.a65f8a3d.js",
+    "main.js": "/VisualizingUFOSightings/static/js/main.470926ab.js",
     "static/js/453.b9e19836.chunk.js": "/VisualizingUFOSightings/static/js/453.b9e19836.chunk.js",
     "index.html": "/VisualizingUFOSightings/index.html",
     "main.e6c13ad2.css.map": "/VisualizingUFOSightings/static/css/main.e6c13ad2.css.map",
-    "main.a65f8a3d.js.map": "/VisualizingUFOSightings/static/js/main.a65f8a3d.js.map",
+    "main.470926ab.js.map": "/VisualizingUFOSightings/static/js/main.470926ab.js.map",
     "453.b9e19836.chunk.js.map": "/VisualizingUFOSightings/static/js/453.b9e19836.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.a65f8a3d.js"
+    "static/js/main.470926ab.js"
   ]
 }
