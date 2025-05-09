@@ -71,11 +71,11 @@ const Graphic4 = ({ selectedSightingID }) => {
     const parts = datePosted.split('/');
     return parts[2] || '';
   };
-
+  const ufoPath = `${process.env.PUBLIC_URL}/ufoIcon1.png`;
   return (
     <div style={styles.box}>
       {ufoPositions.map((style, idx) => (
-        <img key={idx} src="/ufoIcon1.png" alt="UFO" style={style} />
+        <img key={idx} src={ufoPath} alt="UFO" style={style} />
       ))}
 
       {sightingData && sightingData.comments ? (
