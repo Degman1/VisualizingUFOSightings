@@ -15,7 +15,7 @@ const StateComparisonsChart = ({ statesList }) => {
     "PCTPOVALL_2023": "Poverty Rate (All Ages) 2023",
     "Unemployment_rate_2023": "Unemployment Rate 2023",
     "Median_Household_Income_2022": "Median Household Income",
-    "R_DEATH_2023": "Deaths per 1,000 People",
+    "R_DEATH_2023": "Yearly Deaths per 1,000 People",
   };
 
   useEffect(() => {
