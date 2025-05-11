@@ -51,7 +51,7 @@ const TrendsMapMini = ({ onStateClick, statesList, setStatesList }) => {
         .data(geoData)
         .join('path')
         .attr('d', path)
-        .attr('fill', d => statesList.includes(d.properties.name) ? 'red' : '#ccc')
+        .attr('fill', d => statesList.includes(d.properties.name) ? 'green' : '#ccc')
         .attr('cursor', 'pointer')
         .on('click', (event, d) => {
           if (onStateClick) onStateClick(d.properties.name);
@@ -84,7 +84,7 @@ const TrendsMapMini = ({ onStateClick, statesList, setStatesList }) => {
 
     statesRef.current
       .transition().duration(500)
-      .attr('fill', d => statesList.includes(d.properties.name) ? 'red' : '#ccc');
+      .attr('fill', d => statesList.includes(d.properties.name) ? 'green' : '#ccc');
   }, [statesList]);
 
   // Handle preset button click

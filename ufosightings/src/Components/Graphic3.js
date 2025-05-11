@@ -52,7 +52,7 @@ const Graphic3 = ({ selectedSightingID }) => {
       {sightingData ? (
         <div style={styles.dataContainer}>
           {Object.entries(sightingData).map(([key, value]) => {
-            if (['sighting_id', 'datetime', 'comments', 'longitude', 'latitude', 'durationSeconds', 'country'].includes(key)) return null;
+            if (['sighting_id', 'datetime', 'comments', 'durationSeconds', 'country', 'state'].includes(key)) return null;
             return (
               <div key={key} style={styles.row}>
                 <span style={styles.label}>{formatKey(key)}:</span>

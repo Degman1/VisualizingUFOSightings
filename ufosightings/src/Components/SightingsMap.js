@@ -87,21 +87,21 @@ const SightingsMap = ({ onSightingClick }) => {
             return coords ? coords[1] : -100;
           })
           .attr('r', 1.5)
-          .attr('fill', 'red')
+          .attr('fill', 'green')
           .attr('opacity', 0.7)
           .on('mouseover', function () {
             d3.select(this)
               .transition()
               .duration(100)
               .attr('r', 4)
-              .attr('fill', 'darkred');
+              .attr('fill', 'darkgreen');
           })
           .on('mouseout', function () {
             d3.select(this)
               .transition()
               .duration(100)
               .attr('r', 1.5)
-              .attr('fill', 'red');
+              .attr('fill', 'green');
           })
           .on('click', (event, d) => {
             event.stopPropagation();

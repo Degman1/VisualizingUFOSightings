@@ -36,7 +36,7 @@ const StateComparisonsChart = ({ statesList }) => {
   }, []);
 
   useEffect(() => {
-    // if (!statesList.length) return;
+    if (!statesList.length) return;
 
     Promise.all([
       d3.csv(`${process.env.PUBLIC_URL}/cleaned/cleaned_ufo.csv`,        d => ({ state_full: d.state_full.trim() })),
