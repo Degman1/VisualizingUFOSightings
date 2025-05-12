@@ -44,6 +44,16 @@ const Graphic2 = ({ selectedState }) => {
       .attr('class', 'x-axis')
       .attr('transform', `translate(0,${H - M.bottom})`);
 
+    /* x-axis label (static) */
+    svg.selectAll('text.x-label').data([null]).join('text')
+      .attr('class', 'x-label')
+      .attr('x', W / 2)  // Centered horizontally
+      .attr('y', H - 10)  // Positioned just below the x-axis
+      .attr('fill', 'black')
+      .attr('text-anchor', 'middle')
+      .style('font-size', '12px')
+      .text('UFO Shape');
+
     const yAxisG = g.selectAll('g.y-axis').data([null]).join('g')
       .attr('class', 'y-axis')
       .attr('transform', `translate(${M.left},0)`);
@@ -58,33 +68,6 @@ const Graphic2 = ({ selectedState }) => {
       .attr('transform', 'rotate(-90)')
       .style('font-size', '12px')
       .text('Percentage of total sightings');
-
-
-    const title = g.selectAll('text.title').data([null]).join('text')
-      .attr('class', 'title')
-      .attr('text-anchor', 'middle')
-      .attr('x', W / 2)
-      .attr('y', M.top - 10)
-      .style('font-weight', 'bold')
-      .style('font-size', '16px');
-
-    /* tooltip (topmost) */
-    const tooltip = g.selectAll('g.tooltip').data([null]).join(enter => {
-      const t = enter.append('g').attr('class', 'tooltip').style('display', 'none');
-      t.append('rect')
-        .attr('fill', 'white')
-        .attr('stroke', '#333')
-        .attr('rx', 4).attr('ry', 4)
-        .attr('width', T_WIDTH)
-        .attr('height', T_HEIGHT)
-        .attr('x', -T_WIDTH / 2)
-        .attr('y', -T_HEIGHT - 10);
-      t.append('text')
-        .attr('text-anchor', 'middle')
-        .attr('font-size', 12)
-        .attr('y', -T_HEIGHT / 2 - 4);
-      return t;
-    });
 
     /* data load */
     d3.csv(`${process.env.PUBLIC_URL}/cleaned/cleaned_ufo.csv`, d => ({
@@ -120,77 +103,24 @@ const Graphic2 = ({ selectedState }) => {
         .domain([0, maxPerc * 1.1]).nice()
         .range([H - M.bottom, M.top]);
 
-      /* transition */
-      const t = svg.transition().duration(750).ease(d3.easeLinear);
-
       /* axes */
-      xAxisG.transition(t)
-        .call(d3.axisBottom(x))
-        .selectAll('text')
-        .attr('text-anchor', 'end')
-        .attr('transform', 'rotate(-35)')
-        .attr('x', -5)
-        .attr('y', 10)
-        .style('font-size', '11px');
-
-      yAxisG.transition(t)
-        .call(d3.axisLeft(y).tickFormat(d3.format('.0%')))
-        .selectAll('text')
-        .style('font-size', '11px');
+      xAxisG.call(d3.axisBottom(x).tickSize(0));
+      yAxisG.call(d3.axisLeft(y).tickFormat(d3.format('.0%')));
 
       /* bars */
       const bars = g.selectAll('rect.bar').data(top8, d => d.shape);
 
-      bars.exit()
-        .transition(t)
-        .attr('y', y(0))
-        .attr('height', 0)
-        .style('opacity', 0)
-        .remove();
+      bars.exit().remove();
 
-      const barsEnter = bars.enter().append('rect')
+      bars.enter().append('rect')
         .attr('class', 'bar')
-        .attr('x', d => x(d.shape))
-        .attr('width', x.bandwidth())
-        .attr('y', y(0))
-        .attr('height', 0)
-        .style('opacity', 0);
-
-      barsEnter.merge(bars)
-        .transition(t)
-        .style('opacity', 1)
+        .merge(bars)
         .attr('x', d => x(d.shape))
         .attr('width', x.bandwidth())
         .attr('y', d => y(d.percent))
         .attr('height', d => y(0) - y(d.percent))
         .attr('fill', d => SHAPE_COLOR[d.shape] || SHAPE_COLOR.default);
-
-      /* tooltip handlers */
-      g.selectAll('rect.bar')
-        .on('mouseover', function (event, d) {
-          d3.select(this).attr('stroke', '#333').attr('stroke-width', 1.5);
-          tooltip.raise();
-          tooltip.style('display', null)
-            .select('text')
-            .text(`${d.shape}: ${(d.percent * 100).toFixed(1)}% (${d.count})`);
-        })
-        .on('mousemove', function (event, d) {
-          const [mx] = d3.pointer(event, svg.node());
-          let tx = mx;
-          if (tx < M.left + T_WIDTH / 2) tx = M.left + T_WIDTH / 2;
-          if (tx > W - M.right - T_WIDTH / 2) tx = W - M.right - T_WIDTH / 2;
-          const ty = y(d.percent) - 10;
-          tooltip.attr('transform', `translate(${tx},${ty})`);
-        })
-        .on('mouseout', function () {
-          d3.select(this).attr('stroke', 'none');
-          tooltip.style('display', 'none');
-        });
-
-      /* title */
-      title.text(`Top 8 UFO Shapes in ${selectedState}`);
-    })
-      .catch(err => console.error('CSV error:', err));
+    });
   }, [selectedState]);
 
   return (
