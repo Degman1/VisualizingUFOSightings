@@ -4,9 +4,12 @@ import Graphic1 from './Components/Graphic1';
 import Graphic2 from './Components/Graphic2';
 import Graphic3 from './Components/Graphic3';
 import Graphic4 from './Components/Graphic4';
-import Graphic5 from './Components/Graphic5';
+// import Graphic5 from './Components/Graphic5';
 import Graphic6 from './Components/Graphic6';
+import InfoGraphic1 from './Components/InfoGraphic1';
+import InfoGraphic2 from './Components/InfoGraphic2';
 import TrendsMapMini from './Components/TrendsMapMini';
+import InfoPage from './Components/InfoPage';
 
 import Header from './Components/Header';
 import SightingsMap from './Components/SightingsMap';
@@ -59,6 +62,9 @@ const TwoColumnLayout = () => {
         {tab === "comparison" && (
           <StateComparisonsChart statesList={statesList} />
         )}
+        {tab === "info" && (
+          <InfoPage/>
+        )}
       </div>
       <div style={styles.rightColumn}>
         {tab === "aggregate" && <Graphic1 selectedState={selectedState} />}
@@ -67,6 +73,8 @@ const TwoColumnLayout = () => {
         {tab === "individual" && <Graphic4 selectedSightingID={selectedSightingID} />}
         {tab === "comparison" && <TrendsMapMini onStateClick={onStateAdd} statesList={statesList} setStatesList={setStatesList}/>}
         {tab === "comparison" && <Graphic6 statesList={statesList} />}
+        {tab === "info" && <InfoGraphic1 />}
+        {tab === "info" && <InfoGraphic2  />}
       </div>
     </div>
   );

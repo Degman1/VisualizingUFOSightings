@@ -6,15 +6,15 @@ const Graphic2 = ({ selectedState }) => {
 
   /* muted / desaturated palette */
   const SHAPE_COLOR = {
-    light     : '#d9d66b',
-    circle    : '#7da6d8',
-    triangle  : '#c4879a',
-    sphere    : '#8fbc8f',
-    disk      : '#b59dc9',
-    fireball  : '#d59a73',
-    cigar     : '#a78c7b',
-    formation : '#7fbfc4',
-    default   : '#b0b0b0'
+    light: '#d9d66b',
+    circle: '#7da6d8',
+    triangle: '#c4879a',
+    sphere: '#8fbc8f',
+    disk: '#b59dc9',
+    fireball: '#d59a73',
+    cigar: '#a78c7b',
+    formation: '#7fbfc4',
+    default: '#b0b0b0'
   };
 
   useEffect(() => {
@@ -32,8 +32,13 @@ const Graphic2 = ({ selectedState }) => {
     const T_HEIGHT = 40;
 
     /* scaffold */
-    const svg = d3.select(svgRef.current).attr('width', W).attr('height', H);
-    const g   = svg.selectAll('g.chart').data([null]).join('g').attr('class', 'chart');
+    const svg = d3.select(svgRef.current)
+      .attr('viewBox', `0 0 ${W} ${H}`)
+      .attr('preserveAspectRatio', 'xMidYMid meet')
+      .style('width', '100%')
+      .style('height', '100%');
+
+    const g = svg.selectAll('g.chart').data([null]).join('g').attr('class', 'chart');
 
     const xAxisG = g.selectAll('g.x-axis').data([null]).join('g')
       .attr('class', 'x-axis')
@@ -42,6 +47,18 @@ const Graphic2 = ({ selectedState }) => {
     const yAxisG = g.selectAll('g.y-axis').data([null]).join('g')
       .attr('class', 'y-axis')
       .attr('transform', `translate(${M.left},0)`);
+
+    /* y-axis label */
+    yAxisG.selectAll('text.label').data([null]).join('text')
+      .attr('class', 'label')
+      .attr('x', -H / 2)
+      .attr('y', -M.left + 12)
+      .attr('fill', 'black')
+      .attr('text-anchor', 'middle')
+      .attr('transform', 'rotate(-90)')
+      .style('font-size', '12px')
+      .text('Percentage of total sightings');
+
 
     const title = g.selectAll('text.title').data([null]).join('text')
       .attr('class', 'title')
@@ -72,7 +89,7 @@ const Graphic2 = ({ selectedState }) => {
     /* data load */
     d3.csv(`${process.env.PUBLIC_URL}/cleaned/cleaned_ufo.csv`, d => ({
       state_full: d.state_full,
-      shape     : d.shape
+      shape: d.shape
     })).then(raw => {
       /* counts per shape */
       const countsArr = d3.rollups(
@@ -154,8 +171,8 @@ const Graphic2 = ({ selectedState }) => {
           d3.select(this).attr('stroke', '#333').attr('stroke-width', 1.5);
           tooltip.raise();
           tooltip.style('display', null)
-                 .select('text')
-                 .text(`${d.shape}: ${(d.percent*100).toFixed(1)}% (${d.count})`);
+            .select('text')
+            .text(`${d.shape}: ${(d.percent * 100).toFixed(1)}% (${d.count})`);
         })
         .on('mousemove', function (event, d) {
           const [mx] = d3.pointer(event, svg.node());
@@ -173,7 +190,7 @@ const Graphic2 = ({ selectedState }) => {
       /* title */
       title.text(`Top 8 UFO Shapes in ${selectedState}`);
     })
-    .catch(err => console.error('CSV error:', err));
+      .catch(err => console.error('CSV error:', err));
   }, [selectedState]);
 
   return (

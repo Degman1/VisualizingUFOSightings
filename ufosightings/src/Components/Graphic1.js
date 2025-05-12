@@ -13,8 +13,8 @@ const Graphic1 = ({ selectedState }) => {
 
     /* ------------ dims ------------ */
     const margin = { top: 30, right: 20, bottom: 40, left: 50 };
-    const width  = 500 - margin.left - margin.right;
-    const height = 250 - margin.top  - margin.bottom;
+    const width = 500 - margin.left - margin.right;
+    const height = 250 - margin.top - margin.bottom;
 
     /* tooltip box size (smaller now) */
     const BOX_W = 80;
@@ -58,7 +58,28 @@ const Graphic1 = ({ selectedState }) => {
       .join('g')
       .attr('class', 'y-axis');
 
-    /* ------------ tooltip (smaller & centred) ------------ */
+    /* x-axis label */
+    xAxisG.selectAll('text.label').data([null]).join('text')
+      .attr('class', 'label')
+      .attr('x', width / 2)
+      .attr('y', margin.bottom - 5)
+      .attr('fill', 'black')
+      .attr('text-anchor', 'middle')
+      .style('font-size', '12px')
+      .text('Year');
+
+    /* y-axis label */
+    yAxisG.selectAll('text.label').data([null]).join('text')
+      .attr('class', 'label')
+      .attr('x', -height / 2)
+      .attr('y', -margin.left + 17)
+      .attr('fill', 'black')
+      .attr('text-anchor', 'middle')
+      .attr('transform', 'rotate(-90)')
+      .style('font-size', '12px')
+      .text('UFO Sightings');
+
+
     const tooltip = g
       .selectAll('g.tooltip')
       .data([null])

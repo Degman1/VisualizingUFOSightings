@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 
 const StateComparisonsChart = ({ statesList }) => {
   const svgRef = useRef();
-  const [selectedVariable, setSelectedVariable] = useState("Bachelor's degree or higher, 2019-23");
+  const [selectedVariable, setSelectedVariable] = useState("Percent of adults with a bachelor's degree or higher, 2019-23");
   const [educationColumns, setEducationColumns] = useState([]);
   const [scatterData, setScatterData] = useState([]);
 
@@ -36,7 +36,7 @@ const StateComparisonsChart = ({ statesList }) => {
   }, []);
 
   useEffect(() => {
-    if (!statesList.length) return;
+    // if (!statesList.length) return;
 
     Promise.all([
       d3.csv(`${process.env.PUBLIC_URL}/cleaned/cleaned_ufo.csv`,        d => ({ state_full: d.state_full.trim() })),

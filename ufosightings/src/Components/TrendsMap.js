@@ -17,10 +17,10 @@ const TrendsMap = ({ onStateClick, selectedVariable }) => {
 
     const svg = d3.select(svgRef.current)
       .attr('viewBox', `0 0 ${width} ${height}`)
-      .attr('width', width)
-      .attr('height', height)
-      .style('maxWidth', '100%')
-      .style('height', 'auto');
+      .attr('preserveAspectRatio', 'xMidYMid meet')
+      .style('width', '100%')
+      .style('height', '100%');
+
 
     const zoom = d3.zoom()
       .scaleExtent([1, 8])
@@ -201,7 +201,7 @@ const styles = {
     marginTop: '4px',
     fontSize: '11px',
   },
-  
+
 };
 
 export default React.memo(TrendsMap);

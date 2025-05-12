@@ -5,11 +5,11 @@ const Header = ({ setTab }) => {
     <div style={styles.box}>
       <div style={styles.content}>
         <h1 style={styles.title}>UFO Sightings</h1>
-        <p style={styles.subtitle}>Jacob Sweet, David Gerard, Josh Daniel</p>
         <div style={styles.buttonGroup}>
           <button style={styles.button} onClick={() => setTab("aggregate")}>Trends</button>
           <button style={styles.button} onClick={() => setTab("individual")}>Individual Sightings</button>
           <button style={styles.button} onClick={() => setTab("comparison")}>State Comparisons</button>
+          <button style={styles.button} onClick={() => setTab("info")}>Info</button>
         </div>
       </div>
     </div>
